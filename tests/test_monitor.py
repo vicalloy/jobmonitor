@@ -5,6 +5,7 @@ from jobmonitor.message import FileMessageBackend
 from jobmonitor.models import Job
 from jobmonitor.monitor import JobMonitor
 from jobmonitor.monitor import QCWYJobMonitor
+from jobmonitor.monitor import V2exJobMonitor
 from jobmonitor.storage import JobMonitorJsonStorage
 
 from .data import DATA_DIR
@@ -88,9 +89,40 @@ def test_51job_monitor():
     assert monitor.old_job_ids == []
     assert len(monitor.all_job_ids) == 5
 
-    old_job_ids = monitor.all_job_ids
-    params["pagesize"] = "7"
-    monitor.monitor_jobs(params=params)
-    assert monitor.old_job_ids == old_job_ids
-    assert len(monitor.all_job_ids) == 7
-    assert len(monitor.new_job_ids) == 2
+
+def test_v2ex_monitor():
+    rm_file('v2ex_all_job_ids.json')
+
+    params = {
+        'title_keywords': ["[", "北", ","],
+        'content_keywords': [],
+        '': ''
+    }
+    skip_words = ['实习']
+    storage = JobMonitorJsonStorage(base_path=DATA_DIR)
+    message_backend_list = [
+        CLIMessageBackend(),
+        FileMessageBackend(fn=os.path.join(DATA_DIR, 'jobs.txt'))
+    ]
+
+    monitor = V2exJobMonitor(storage=storage, message_backend_list=message_backend_list)
+    monitor.monitor_jobs(params=params, skip_words=skip_words)
+    assert len(monitor.all_job_ids) > 0
+
+    rm_file('v2ex_all_job_ids.json')
+    params = {
+        'title_keywords': [],
+        'content_keywords': ["，"],
+        '': ''
+    }
+    monitor.monitor_jobs(params=params, skip_words=skip_words)
+    assert len(monitor.all_job_ids) > 0
+
+    rm_file('v2ex_all_job_ids.json')
+    params = {
+        'title_keywords': ["aa bb cc dd xx"],
+        'content_keywords': ["aa bb cc dd xx"],
+        '': ''
+    }
+    monitor.monitor_jobs(params=params, skip_words=skip_words)
+    assert len(monitor.all_job_ids) == 0
