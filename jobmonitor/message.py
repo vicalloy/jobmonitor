@@ -25,12 +25,18 @@ class BaseMessageBackend:
 
 class IMMessageBackend(BaseMessageBackend):
 
+    def __init__(self, show_jobs_count=True):
+        super().__init__()
+        self.show_jobs_count = show_jobs_count
+
     def send_job_notify(self, job):
         content = '------------------------\n'
         content += "%s" % job.description
         self.send_raw_message(content)
 
     def send_jobs_notify(self, jobs, all_job_count):
+        if not self.show_jobs_count:
+            return
         content = '------------- job count: %s -------------\n' % all_job_count
         self.send_raw_message(content)
 
@@ -42,8 +48,8 @@ class CLIMessageBackend(IMMessageBackend):
 
 
 class FileMessageBackend(IMMessageBackend):
-    def __init__(self, fn):
-        super().__init__()
+    def __init__(self, fn, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.fn = fn
 
     def start(self):
