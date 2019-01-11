@@ -1,0 +1,31 @@
+sudo: false
+language: python
+
+# command to install dependencies
+install: "make"
+
+# command to run tests
+script:
+  - make ci
+
+cache: pip
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - make coverage
+      python: '3.5'
+    - stage: test
+      script:
+        - make coverage
+      python: '3.6'
+    - stage: test
+      script:
+        - make coverage
+      python: '3.7'
+      dist: xenial
+      sudo: true
+
+notifications:
+  email: false
