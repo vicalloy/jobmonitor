@@ -1,11 +1,11 @@
 import os
 
+from jobmonitor.message import CLIMessageBackend
+from jobmonitor.message import FileMessageBackend
 from jobmonitor.models import Job
 from jobmonitor.monitor import JobMonitor
 from jobmonitor.monitor import QCWYJobMonitor
 from jobmonitor.storage import JobMonitorJsonStorage
-from jobmonitor.message import CLIMessageBackend
-from jobmonitor.message import FileMessageBackend
 
 from .data import DATA_DIR
 from .data import d_job
