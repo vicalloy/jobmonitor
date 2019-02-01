@@ -25,12 +25,16 @@ class BaseMessageBackend:
 
 class IMMessageBackend(BaseMessageBackend):
 
-    def __init__(self, show_jobs_count=True):
+    def __init__(self, with_separtor=True, show_jobs_count=True):
         super().__init__()
+        self.with_separtor = with_separtor
         self.show_jobs_count = show_jobs_count
 
     def send_job_notify(self, job):
-        content = '------------------------\n'
+        if self.with_separtor:
+            content = '------------------------\n'
+        else:
+            content = ''
         content += "%s" % job.description
         self.send_raw_message(content)
 
@@ -65,8 +69,8 @@ class FileMessageBackend(IMMessageBackend):
 
 class SlackMessageBackend(IMMessageBackend):
 
-    def __init__(self, slack_api_key, channel):
-        super().__init__()
+    def __init__(self, slack_api_key, channel, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.slack_api_key = slack_api_key
         self.channel = channel
 
