@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import sys
-
 from codecs import open
 
 from setuptools import setup
@@ -87,6 +86,6 @@ setup(
     tests_require=test_requirements,
     cmdclass={'test': PyTest},
     extras_require={
-        'socks': ['slackclient'],
+        'slack': ['slackclient'],
     },
 )
