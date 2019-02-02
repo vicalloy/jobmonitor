@@ -1,18 +1,17 @@
 [[source]]
-url = "https://pypi.org/simple"
+url = "https://mirrors.aliyun.com/pypi/simple"
 verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
-"beautifulsoup4" = "*"
-slackclient = "*"
+"e1839a8" = {path = ".", editable = true, extras = ["slack"]}
 
 [dev-packages]
 pytest = "*"
 isort = "*"
 pytest-cov = "*"
 coverage = "*"
+codecov = "*"
 
 [requires]
 python_version = "3.6"
