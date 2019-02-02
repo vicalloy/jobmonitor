@@ -29,6 +29,8 @@ jobs:
     - stage: coverage
       python: '3.6'
       script: codecov
+        - make coverage
+        - codecov
 
 notifications:
   email: false
