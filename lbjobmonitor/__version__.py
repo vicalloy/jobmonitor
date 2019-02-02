@@ -1,6 +1,6 @@
-__title__ = 'jobmonitor'
+__title__ = 'lbjobmonitor'
 __description__ = 'Job Monitor.'
-__url__ = 'https://github.com/vicalloy/jobmonitor/'
+__url__ = 'https://github.com/vicalloy/lbjobmonitor/'
 __version__ = '0.9.0'
 __build__ = 0x022100
 __author__ = 'vicalloy'

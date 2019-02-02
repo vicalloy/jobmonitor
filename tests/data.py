@@ -1,6 +1,6 @@
 import os
 
-from jobmonitor.models import Job
+from lbjobmonitor.models import Job
 
 d_job = Job(id="id", name="name", description="description")
 d_job_1 = Job(id="id1", name="name1", description="description1")

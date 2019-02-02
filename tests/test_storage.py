@@ -1,4 +1,4 @@
-from jobmonitor.storage import JobMonitorJsonStorage
+from lbjobmonitor.storage import JobMonitorJsonStorage
 
 from .data import DATA_DIR
 

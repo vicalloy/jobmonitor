@@ -32,7 +32,7 @@ if sys.argv[-1] == 'publish':
     os.system('twine upload dist/*')
     sys.exit()
 
-packages = ['jobmonitor']
+packages = ['lbjobmonitor']
 
 requires = [
     'requests',
@@ -46,7 +46,7 @@ test_requirements = [
 ]
 
 about = {}
-with open(os.path.join(here, 'jobmonitor', '__version__.py'), 'r', 'utf-8') as f:
+with open(os.path.join(here, 'lbjobmonitor', '__version__.py'), 'r', 'utf-8') as f:
     exec(f.read(), about)
 
 with open('README.md', 'r', 'utf-8') as f:
@@ -65,7 +65,7 @@ setup(
     url=about['__url__'],
     packages=packages,
     package_data={'': ['LICENSE']},
-    package_dir={'jobmonitor': 'jobmonitor'},
+    package_dir={'lbjobmonitor': 'lbjobmonitor'},
     include_package_data=True,
     python_requires=">=3.5",
     install_requires=requires,

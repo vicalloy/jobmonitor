@@ -1,7 +1,7 @@
 import os
 
-from jobmonitor.message import CLIMessageBackend
-from jobmonitor.message import FileMessageBackend
+from lbjobmonitor.message import CLIMessageBackend
+from lbjobmonitor.message import FileMessageBackend
 
 from .data import DATA_DIR
 from .data import d_job
