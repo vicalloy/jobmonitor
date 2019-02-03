@@ -33,7 +33,7 @@ $ pipenv install lbjobmonitor
 ```
 
 
-- 创建jobs.py。使用`python jobs.py`执行查询。
+- 创建`jobs.py`。使用`python jobs.py`执行查询。
 - 可在服务器上使用crontab设置定时任务，定期检查
 
 ```python
