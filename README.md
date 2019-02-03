@@ -80,6 +80,28 @@ if __name__ == "__main__":
 
 - JobMonitor # 工作岗位监控类，需要根据网站给出具体实现。
 	- storage
-		- JobMonitorStorage  # 历史工作列表的存储实现类 
+		- JobMonitorStorage  # 历史工作列表的存储实现类
 	- message_backend_list
 		- [BaseMessageBackend]  # 消息发送的后端实现
+	- job_class
+		- Job  # 将通过API查询返回的工作信息转换为标准的Job对象
+
+## 代码导航
+
+- [monitor.py](https://github.com/vicalloy/jobmonitor/blob/master/lbjobmonitor/monitor.py)
+	- JobMonitor  # 工作岗位监控基础类
+	- QCWYJobMonitor  # 51JOB岗位监控实现
+	- V2exJobMonitor  # V2EX岗位监控实现
+- [storage.py](https://github.com/vicalloy/jobmonitor/blob/master/lbjobmonitor/storage.py)
+	- JobMonitorStorage  # 存储区基础类
+	- JobMonitorJsonStorage  # 将信息以json方式保存到文件的存储区实现
+- [message.py](https://github.com/vicalloy/jobmonitor/blob/master/lbjobmonitor/message.py)
+	- BaseMessageBackend 消息发送处理后端基础类
+	- IMMessageBackend IM类消息的后端基础类
+	- CLIMessageBackend 将消息发送到控制台
+	- FileMessageBackend 将消息保存到文件
+	- SlackMessageBackend 将消息发送到Slack
+- [models.py](https://github.com/vicalloy/jobmonitor/blob/master/lbjobmonitor/models.py)
+	- Job 岗位信息基础数据类
+	- QCWYJob 51JOB的岗位信息解析类
+	- V2exJob V2EX的岗位信息解析类
