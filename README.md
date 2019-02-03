@@ -1,8 +1,8 @@
 lbjobmonitor
 ==========
 
-[![image](https://secure.travis-ci.org/vicalloy/django-lb-workflow.svg?branch=master)](http://travis-ci.org/vicalloy/django-lb-workflow)
-[![codecov.io](https://codecov.io/github/vicalloy/lbjobmonitor/coverage.svg?branch=master)](https://codecov.io/github/vicalloy/lbjobmonitor)
+[![image](https://secure.travis-ci.org/vicalloy/jobmonitor.svg?branch=master)](http://travis-ci.org/vicalloy/jobmonitor)
+[![codecov.io](https://codecov.io/github/vicalloy/jobmonitor/coverage.svg?branch=master)](https://codecov.io/github/vicalloy/jobmonitor)
 
 招聘网站信息监控工具，监控招聘网站工作岗位更新情况并发送通知。
 
