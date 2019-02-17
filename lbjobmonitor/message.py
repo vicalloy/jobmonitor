@@ -1,8 +1,12 @@
 try:
-    from slackclient import SlackClient  # NOQA
+    from slackclient import SlackClient
 except ImportError:
     SlackClient = None
-    pass
+
+try:
+    from telegram import Bot
+except ImportError:
+    Bot = None
 
 
 class BaseMessageBackend:
@@ -84,3 +88,19 @@ class SlackMessageBackend(IMMessageBackend):
             channel=self.channel,
             text=content
         )
+
+
+class TelegramMessageBackend(IMMessageBackend):
+
+    def __init__(self, token, chat_id, *args, **kwargs):
+        # https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id
+        super().__init__(*args, **kwargs)
+        self.token = token
+        self.chat_id = chat_id
+
+    def send_raw_message(self, content):
+        if not Bot:
+            print('you must install python-telegram-bot')
+            return
+        bot = Bot(token=self.token)
+        bot.send_message(chat_id=self.chat_id, text=content)

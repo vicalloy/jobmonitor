@@ -87,5 +87,6 @@ setup(
     cmdclass={'test': PyTest},
     extras_require={
         'slack': ['slackclient'],
+        'telegram': ['python-telegram-bot'],
     },
 )

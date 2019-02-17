@@ -51,8 +51,8 @@ DATA_DIR = BASE_DIR
 
 
 def qcwy():
-    params = {  # 51job的查询参数，可在51job设置好查询条件后，通过chrome查看具体参数。
-        'saltype': '',
+    params = {  # 51job的查询参数。51job设置好查询条件后发起查询，通过chrome的调试功能查看请求的具体参数。
+        'saltype': '',  # 薪资范围
         'keyword': 'python',  # 关键词
         'postchannel': '0000',
         'keywordtype': '2',
@@ -69,7 +69,8 @@ def qcwy():
     monitor = QCWYJobMonitor(
         storage=storage, message_backend_list=message_backend_list)
 		# monitor.max_page_idx = 1  # 最多查询页数，设置成1方便调试
-    monitor.monitor_jobs(params=params)  # 执行查询
+    skip_words = ['AI']
+    monitor.monitor_jobs(params=params, skip_words=skip_words)  # 执行查询
 
 
 if __name__ == "__main__":
@@ -79,12 +80,12 @@ if __name__ == "__main__":
 ## 构架说明
 
 - JobMonitor # 工作岗位监控类，需要根据网站给出具体实现。
+	- job_class
+		- Job  # 将通过API查询返回的工作信息转换为标准的Job对象
 	- storage
 		- JobMonitorStorage  # 历史工作列表的存储实现类
 	- message_backend_list
 		- [BaseMessageBackend]  # 消息发送的后端实现
-	- job_class
-		- Job  # 将通过API查询返回的工作信息转换为标准的Job对象
 
 ## 代码导航
 
@@ -101,6 +102,7 @@ if __name__ == "__main__":
 	- CLIMessageBackend 将消息发送到控制台
 	- FileMessageBackend 将消息保存到文件
 	- SlackMessageBackend 将消息发送到Slack
+	- TelegramMessageBackend 将消息发送到Telegram
 - [models.py](https://github.com/vicalloy/jobmonitor/blob/master/lbjobmonitor/models.py)
 	- Job 岗位信息基础数据类
 	- QCWYJob 51JOB的岗位信息解析类
