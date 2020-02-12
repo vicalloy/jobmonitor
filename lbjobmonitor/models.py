@@ -1,3 +1,8 @@
+__all__ = (
+    'Job', 'QCWYJob', 'V2exJob',
+)
+
+
 class Job:
 
     def __init__(self, org_job_item=None, id="", name="", description="", detail=""):

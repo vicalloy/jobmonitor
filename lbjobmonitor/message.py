@@ -9,6 +9,12 @@ except ImportError:
     Bot = None
 
 
+__all__ = (
+    'BaseMessageBackend', 'IMMessageBackend', 'CLIMessageBackend',
+    'FileMessageBackend', 'SlackMessageBackend', 'TelegramMessageBackend'
+)
+
+
 class BaseMessageBackend:
 
     def start(self):
