@@ -48,7 +48,7 @@ class QCWYJob(Job):
         description += '\n%s' % org_job_item.providesalary.text
         description += '\n%s' % org_job_item.workyear.text
         description += '\n%s' % org_job_item.jobarea.text
-        description += '\n%s' % org_job_item.jobinfo.text
+        description += '\n%s' % org_job_item.cosize.text
         description += '\n%s' % org_job_item.issuedate.text
         return description
 

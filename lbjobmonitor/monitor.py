@@ -94,7 +94,7 @@ class JobMonitor:
 
 
 class QCWYJobMonitor(JobMonitor):
-    url = 'http://api.51job.com/api/job/search_job_list.php'
+    url = 'http://appapi.51job.com/api/job/search_job_list.php'
     job_class = QCWYJob
     all_job_ids_data_type = '51job_all_job_ids'
 
