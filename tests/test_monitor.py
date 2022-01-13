@@ -1,17 +1,11 @@
 import os
 
-from lbjobmonitor.message import CLIMessageBackend
-from lbjobmonitor.message import FileMessageBackend
+from lbjobmonitor.message import CLIMessageBackend, FileMessageBackend
 from lbjobmonitor.models import Job
-from lbjobmonitor.monitor import JobMonitor
-from lbjobmonitor.monitor import QCWYJobMonitor
-from lbjobmonitor.monitor import V2exJobMonitor
+from lbjobmonitor.monitor import JobMonitor, QCWYJobMonitor, V2exJobMonitor
 from lbjobmonitor.storage import JobMonitorJsonStorage
 
-from .data import DATA_DIR
-from .data import d_job
-from .data import d_job_1
-from .data import d_job_2
+from .data import DATA_DIR, d_job, d_job_1, d_job_2
 
 
 class SimpleJob(Job):
@@ -38,13 +32,13 @@ def rm_file(base_fn):
         fn = os.path.join(DATA_DIR, base_fn)
         os.remove(fn)
     except EnvironmentError:
-        print('oops')
+        print("oops")
 
 
 def test_job_monitor():
-    rm_file('all_job_ids.json')
+    rm_file("all_job_ids.json")
 
-    skip_words = ['1']
+    skip_words = ["1"]
     storage = JobMonitorJsonStorage(base_path=DATA_DIR)
     monitor = SimpleJobMonitor(
         storage=storage,
@@ -66,21 +60,21 @@ def test_job_monitor():
 
 
 def test_51job_monitor():
-    rm_file('51job_all_job_ids.json')
+    rm_file("51job_all_job_ids.json")
 
     params = {
-        'saltype': '',
-        'keyword': 'python',
-        'postchannel': '0000',
-        'keywordtype': '2',
-        'jobarea': '080200',
-        'pagesize': '5',
-        '': ''
+        "saltype": "",
+        "keyword": "python",
+        "postchannel": "0000",
+        "keywordtype": "2",
+        "jobarea": "080200",
+        "pagesize": "5",
+        "": "",
     }
     storage = JobMonitorJsonStorage(base_path=DATA_DIR)
     message_backend_list = [
         CLIMessageBackend(),
-        FileMessageBackend(fn=os.path.join(DATA_DIR, 'jobs.txt'))
+        FileMessageBackend(fn=os.path.join(DATA_DIR, "jobs.txt")),
     ]
 
     monitor = QCWYJobMonitor(storage=storage, message_backend_list=message_backend_list)
@@ -91,38 +85,30 @@ def test_51job_monitor():
 
 
 def test_v2ex_monitor():
-    rm_file('v2ex_all_job_ids.json')
+    rm_file("v2ex_all_job_ids.json")
 
-    params = {
-        'title_keywords': ["[", "北", ","],
-        'content_keywords': [],
-        '': ''
-    }
-    skip_words = ['实习']
+    params = {"title_keywords": ["[", "北", ","], "content_keywords": [], "": ""}
+    skip_words = ["实习"]
     storage = JobMonitorJsonStorage(base_path=DATA_DIR)
     message_backend_list = [
         CLIMessageBackend(),
-        FileMessageBackend(fn=os.path.join(DATA_DIR, 'jobs.txt'))
+        FileMessageBackend(fn=os.path.join(DATA_DIR, "jobs.txt")),
     ]
 
     monitor = V2exJobMonitor(storage=storage, message_backend_list=message_backend_list)
     monitor.monitor_jobs(params=params, skip_words=skip_words)
     assert len(monitor.all_job_ids) > 0
 
-    rm_file('v2ex_all_job_ids.json')
-    params = {
-        'title_keywords': [],
-        'content_keywords': ["，"],
-        '': ''
-    }
+    rm_file("v2ex_all_job_ids.json")
+    params = {"title_keywords": [], "content_keywords": ["，"], "": ""}
     monitor.monitor_jobs(params=params, skip_words=skip_words)
     assert len(monitor.all_job_ids) > 0
 
-    rm_file('v2ex_all_job_ids.json')
+    rm_file("v2ex_all_job_ids.json")
     params = {
-        'title_keywords': ["aa bb cc dd xx"],
-        'content_keywords': ["aa bb cc dd xx"],
-        '': ''
+        "title_keywords": ["aa bb cc dd xx"],
+        "content_keywords": ["aa bb cc dd xx"],
+        "": "",
     }
     monitor.monitor_jobs(params=params, skip_words=skip_words)
     assert len(monitor.all_job_ids) == 0

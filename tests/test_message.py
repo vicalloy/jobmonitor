@@ -1,10 +1,8 @@
 import os
 
-from lbjobmonitor.message import CLIMessageBackend
-from lbjobmonitor.message import FileMessageBackend
+from lbjobmonitor.message import CLIMessageBackend, FileMessageBackend
 
-from .data import DATA_DIR
-from .data import d_job
+from .data import DATA_DIR, d_job
 
 
 def test_cli_message_backend():
@@ -18,7 +16,7 @@ def test_cli_message_backend():
 
 
 def test_file_message_backend():
-    message_backend = FileMessageBackend(os.path.join(DATA_DIR, 'jobs.txt'))
+    message_backend = FileMessageBackend(os.path.join(DATA_DIR, "jobs.txt"))
     message_backend.start()
     message_backend.send_raw_message("hello")
     message_backend.send_job_notify(job=d_job)

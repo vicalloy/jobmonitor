@@ -1,20 +1,20 @@
 import requests
 from bs4 import BeautifulSoup
 
-from .models import Job
-from .models import QCWYJob
-from .models import V2exJob
+from .models import Job, QCWYJob, V2exJob
 
 __all__ = (
-    'JobMonitor', 'QCWYJobMonitor', 'V2exJobMonitor',
+    "JobMonitor",
+    "QCWYJobMonitor",
+    "V2exJobMonitor",
 )
 
 
 class JobMonitor:
-    url = ''
+    url = ""
     job_class = Job
     max_page_idx = 999
-    all_job_ids_data_type = 'all_job_ids'
+    all_job_ids_data_type = "all_job_ids"
 
     def __init__(self, storage, message_backend_list=()):
         self.storage = storage
@@ -28,14 +28,12 @@ class JobMonitor:
         self.new_jobs = []
 
     def load_old_job_ids(self):
-        return self.storage.load(
-            data_type=self.all_job_ids_data_type,
-            default=[])
+        return self.storage.load(data_type=self.all_job_ids_data_type, default=[])
 
     def update_old_job_ids(self):
         return self.storage.dump(
-            data_type=self.all_job_ids_data_type,
-            obj=list(self.all_job_ids))
+            data_type=self.all_job_ids_data_type, obj=list(self.all_job_ids)
+        )
 
     def get_org_job_item_list(self, params, page_idx=1):
         return []
@@ -94,21 +92,21 @@ class JobMonitor:
 
 
 class QCWYJobMonitor(JobMonitor):
-    url = 'http://appapi.51job.com/api/job/search_job_list.php'
+    url = "http://appapi.51job.com/api/job/search_job_list.php"
     job_class = QCWYJob
-    all_job_ids_data_type = '51job_all_job_ids'
+    all_job_ids_data_type = "51job_all_job_ids"
 
     def get_org_job_item_list(self, params, page_idx=1):
-        params['pageno'] = page_idx
+        params["pageno"] = page_idx
         r = requests.get(self.url, params=params, verify=False)
         soup = BeautifulSoup(r.text, "html.parser")
-        return soup.find_all('item')
+        return soup.find_all("item")
 
 
 class V2exJobMonitor(JobMonitor):
-    url = 'https://www.v2ex.com/api/topics/show.json?node_name=jobs'
+    url = "https://www.v2ex.com/api/topics/show.json?node_name=jobs"
     job_class = V2exJob
-    all_job_ids_data_type = 'v2ex_all_job_ids'
+    all_job_ids_data_type = "v2ex_all_job_ids"
     max_page_idx = 1
 
     def get_org_job_item_list(self, params, page_idx=1):
@@ -119,12 +117,12 @@ class V2exJobMonitor(JobMonitor):
         if not super().need_notify(job=job, skip_words=skip_words, params=params):
             return False
 
-        title_keywords = params.get('title_keywords', [])
+        title_keywords = params.get("title_keywords", [])
         for k in title_keywords:
             if k in job.name:
                 return True
 
-        content_keywords = params.get('content_keywords', [])
+        content_keywords = params.get("content_keywords", [])
         content = "%s %s" % (job.name, job.detail)
         content = content.lower()
         for k in content_keywords:

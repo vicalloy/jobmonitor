@@ -1,10 +1,11 @@
 __all__ = (
-    'Job', 'QCWYJob', 'V2exJob',
+    "Job",
+    "QCWYJob",
+    "V2exJob",
 )
 
 
 class Job:
-
     def __init__(self, org_job_item=None, id="", name="", description="", detail=""):
         if org_job_item:
             self.parse(org_job_item)
@@ -34,7 +35,6 @@ class Job:
 
 
 class QCWYJob(Job):
-
     def parse_job_id(self, org_job_item):
         return org_job_item.jobid.text
 
@@ -43,26 +43,25 @@ class QCWYJob(Job):
 
     def parse_job_description(self, org_job_item):
         description = org_job_item.coname.text
-        description += '\n%s' % org_job_item.jobname.text
-        description += '\n%s' % org_job_item.cotype.text
-        description += '\n%s' % org_job_item.providesalary.text
-        description += '\n%s' % org_job_item.workyear.text
-        description += '\n%s' % org_job_item.jobarea.text
-        description += '\n%s' % org_job_item.cosize.text
-        description += '\n%s' % org_job_item.issuedate.text
+        description += "\n%s" % org_job_item.jobname.text
+        description += "\n%s" % org_job_item.cotype.text
+        description += "\n%s" % org_job_item.providesalary.text
+        description += "\n%s" % org_job_item.workyear.text
+        description += "\n%s" % org_job_item.jobarea.text
+        description += "\n%s" % org_job_item.cosize.text
+        description += "\n%s" % org_job_item.issuedate.text
         return description
 
 
 class V2exJob(Job):
-
     def parse_job_id(self, org_job_item):
-        return org_job_item['id']
+        return org_job_item["id"]
 
     def parse_job_name(self, org_job_item):
-        return org_job_item['title']
+        return org_job_item["title"]
 
     def parse_job_description(self, org_job_item):
-        return '%s %s' % (org_job_item['title'], org_job_item['url'])
+        return "%s %s" % (org_job_item["title"], org_job_item["url"])
 
     def parse_job_detail(self, org_job_item):
-        return org_job_item['content']
+        return org_job_item["content"]

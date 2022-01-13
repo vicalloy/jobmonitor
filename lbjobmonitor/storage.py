@@ -21,13 +21,13 @@ class JobMonitorJsonStorage(JobMonitorStorage):
     def load(self, data_type, default=None):
         file_name = self.get_file_name(data_type=data_type)
         try:
-            with open(file_name, 'r') as f:
+            with open(file_name, "r") as f:
                 return json.load(f)
         except EnvironmentError:
-            print('oops')
+            print("oops")
         return default
 
     def dump(self, data_type, obj):
         file_name = self.get_file_name(data_type=data_type)
-        with open(file_name, 'w') as f:
+        with open(file_name, "w") as f:
             json.dump(obj, f)
